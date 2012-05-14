@@ -107,6 +107,21 @@
     </command>
 
     <!-- =================================================================== -->
+    <!--unsubscribes-->
+    <!-- =================================================================== -->
+    <command name="unsubscribes.get"
+             extends="abstract.event_list.command"
+             uri="unsubscribes.get.json?api_user={username}&amp;api_key={password}">
+      <doc>Retrieve a list of unsubscribes with addresses, optionally with dates.</doc>
+    </command>
+
+    <command name="unsubscribes.delete"
+             extends="abstract.event_delete.command"
+             uri="unsubscribes.delete.json?api_user={username}&amp;api_key={password}">
+      <doc>Delete an address from the Unsubscribe list. Please note that if no parameters are specified the ENTIRE list will be deleted.</doc>
+    </command>
+
+    <!-- =================================================================== -->
     <!--spam reports-->
     <!-- =================================================================== -->
     <command name="spamreports.get"
