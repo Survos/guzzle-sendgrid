@@ -1,0 +1,203 @@
+{
+  "name": "SendGrid client",
+  "apiVersion": "",
+  "description": "",
+  "operations": {
+    "abstract.event_list.command": {
+      "httpMethod": "GET",
+      "class": "Guzzle\\SendGrid\\Command\\SendGridCommand",
+      "parameters": {
+        "date": {
+          "static": "1",
+          "location": "query",
+          "description": "Retrieve the timestamp of the bounce records. It will return a date in a MySQL timestamp format – YYYY-MM-DD HH:MM:SS"
+        },
+        "days": {
+          "type": "integer",
+          "location": "query",
+          "description": "Number of days in the past for which to retrieve bounces (includes today) "
+        },
+        "start_date": {
+          "type": "date",
+          "location": "query",
+          "filters": "Guzzle\\SendGrid\\Command\\SendGridCommand::dateFormat",
+          "description": "The start of the date range for which to retrieve bounces. "
+        },
+        "end_date": {
+          "type": "date",
+          "location": "query",
+          "filters": "Guzzle\\SendGrid\\Command\\SendGridCommand::dateFormat",
+          "description": "The end of the date range for which to retrieve bounces."
+        },
+        "limit": {
+          "type": "integer",
+          "location": "query",
+          "description": "Optional field to limit the number of results returned."
+        },
+        "offset": {
+          "type": "integer",
+          "location": "query",
+          "description": "optional beginning point in the list to retrieve from."
+        },
+        "email": {
+          "type": "string",
+          "location": "query",
+          "description": "optional email addresses to search for."
+        }
+      }
+    },
+    "abstract.event_delete.command": {
+      "httpMethod": "POST",
+      "class": "Guzzle\\SendGrid\\Command\\SendGridPostCommand",
+      "parameters": {
+        "start_date": {
+          "type": "date",
+          "filters": "Guzzle\\SendGrid\\Command\\SendGridCommand::dateFormat",
+          "location": "query",
+          "description": "The start of the date range for which to retrieve bounces. "
+        },
+        "end_date": {
+          "type": "date",
+          "filters": "Guzzle\\SendGrid\\Command\\SendGridCommand::dateFormat",
+          "location": "query",
+          "description": "The end of the date range for which to retrieve bounces."
+        }
+      }
+    },
+    "abstract.event_count.command": {
+      "start_date": {
+        "type": "date",
+        "location": "query",
+        "description": "Optional date to start counting from."
+      },
+      "end_date": {
+        "type": "date",
+        "location": "query",
+        "description": "Optional date to end counting from."
+      }
+    },
+    "bounces.get": {
+      "extends": "abstract.event_list.command",
+      "uri": "bounces.get.json?api_user={username}&amp;api_key={password}",
+      "description": "Retrieve a list of bounces with addresses and response codes, optionally with dates.",
+      "parameters": {
+        "type": {
+          "type": "string",
+          "location": "query",
+          "description": "choose the type of bounce to search for [enum:hard,soft]"
+        }
+      }
+    },
+    "bounces.delete": {
+      "extends": "abstract.event_delete.command",
+      "uri": "bounces.delete.json?api_user={username}&amp;api_key={password}",
+      "description": "Delete an address from the Bounce list. Please note that if no parameters are specified the ENTIRE list will be deleted.",
+      "parameters": {
+        "type": {
+          "type": "string",
+          "location": "query",
+          "description": "choose the type of bounce to search for [enum:hard,soft]"
+        }
+      }
+    },
+    "bounces.count": {
+      "extends": "abstract.event_count.command",
+      "uri": "bounces.count.json?api_user={username}&amp;api_key={password}",
+      "description": "Retrieve the number of bounces",
+      "parameters": {
+        "type": {
+          "type": "string",
+          "location": "query",
+          "description": "choose the type of bounce to search for [enum:hard,soft]"
+        }
+      }
+    },
+    "blocks.get": {
+      "extends": "abstract.event_list.command",
+      "uri": "blocks.get.json?api_user={username}&amp;api_key={password}",
+      "description": "Retrieve a list of Blocks with addresses and response codes, optionally with dates."
+    },
+    "blocks.delete": {
+      "httpMethod": "POST",
+      "class": "Guzzle\\SendGrid\\Command\\SendGridPostCommand",
+      "uri": "bounces.delete.json?api_user={username}&amp;api_key={password}",
+      "description": "Delete an address from the Block list.",
+      "parameters": {
+        "email": {
+          "type": "string",
+          "location": "query",
+          "required": true,
+          "description": "Email block address to remove."
+        }
+      }
+    },
+    "invalidemails.get": {
+      "extends": "abstract.event_list.command",
+      "uri": "invalidemails.get.json?api_user={username}&amp;api_key={password}",
+      "description": "Retrieve a list of invalid emails with addresses and response codes, optionally with dates."
+    },
+    "invalidemails.delete": {
+      "extends": "abstract.event_delete.command",
+      "uri": "invalidemails.delete.json?api_user={username}&amp;api_key={password}",
+      "description": "Delete an address from the Invalid Email list. Please note that if no parameters are specified the ENTIRE list will be deleted."
+    },
+    "invalidemails.count": {
+      "extends": "abstract.event_count.command",
+      "uri": "invalidemails.count.json?api_user={username}&amp;api_key={password}",
+      "description": "Retrieve the number of invalid emails"
+    },
+    "unsubscribes.get": {
+      "extends": "abstract.event_list.command",
+      "uri": "unsubscribes.get.json?api_user={username}&amp;api_key={password}",
+      "description": "Retrieve a list of unsubscribes with addresses, optionally with dates."
+    },
+    "unsubscribes.delete": {
+      "extends": "abstract.event_delete.command",
+      "uri": "unsubscribes.delete.json?api_user={username}&amp;api_key={password}",
+      "description": "Delete an address from the Unsubscribe list. Please note that if no parameters are specified the ENTIRE list will be deleted."
+    },
+    "spamreports.get": {
+      "extends": "abstract.event_list.command",
+      "uri": "spamreports.get.json?api_user={username}&amp;api_key={password}",
+      "description": "Retrieve a list of spam reports with addresses and response codes, optionally with dates."
+    },
+    "spamreports.delete": {
+      "extends": "abstract.event_delete.command",
+      "uri": "spamreports.delete.json?api_user={username}&amp;api_key={password}",
+      "description": "Delete an address from the Spam Reports list.",
+      "parameters": {
+        "email": {
+          "type": "string",
+          "location": "query",
+          "required": true,
+          "description": "Email spam reports address to remove."
+        }
+      }
+    },
+    "stats.get": {
+      "httpMethod": "GET",
+      "class": "Guzzle\\SendGrid\\Command\\SendGridCommand",
+      "uri": "stats.get.json?api_user={username}&amp;api_key={password}",
+      "parameters": {
+        "days": {
+          "type": "integer",
+          "location": "query",
+          "description": "Number of days in the past to include statistics (includes today) "
+        },
+        "start_date": {
+          "type": "date",
+          "location": "query",
+          "filters": "Guzzle\\SendGrid\\Command\\SendGridCommand::dateFormat",
+          "description": "The start date to look up statistics."
+        },
+        "end_date": {
+          "type": "date",
+          "location": "query",
+          "filters": "Guzzle\\SendGrid\\Command\\SendGridCommand::dateFormat",
+          "description": "The end date to look up statistics."
+        }
+      }
+    }
+  }
+}
+

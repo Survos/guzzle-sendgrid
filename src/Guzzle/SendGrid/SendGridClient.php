@@ -3,7 +3,8 @@
 namespace Guzzle\SendGrid;
 
 use Guzzle\Service\Client;
-use Guzzle\Service\Inspector;
+use Guzzle\Common\Collection;
+use Guzzle\Service\Description\ServiceDescription;
 use Guzzle\Service\Description\XmlDescriptionBuilder;
 
 class SendGridClient extends Client
@@ -31,11 +32,11 @@ class SendGridClient extends Client
      *
      * @TODO update factory method and docblock for parameters
      */
-    public static function factory($config)
+    public static function factory($config = [])
     {
-        $default = array('base_url' => 'https://sendgrid.com/api/');
-        $required = array('username', 'password', 'base_url');
-        $config = Inspector::prepareConfig($config, $default, $required);
+        $default = ['base_url' => 'https://sendgrid.com/api/'];
+        $required = ['username', 'password', 'base_url'];
+        $config = Collection::fromConfig($config, $default, $required);
 
         $client = new self($config->get('base_url'),
                            $config->get('username'),
@@ -43,7 +44,8 @@ class SendGridClient extends Client
         $client->setConfig($config);
 
         // Uncomment the following two lines to use an XML service description
-        $client->setDescription(XmlDescriptionBuilder::build('file://'.__DIR__ . DIRECTORY_SEPARATOR . 'client.xml'));
+//        $client->setDescription(XmlDescriptionBuilder::build('file://'.__DIR__ . DIRECTORY_SEPARATOR . 'client.xml'));
+        $client->setDescription(ServiceDescription::factory(__DIR__ . DIRECTORY_SEPARATOR . 'client.json'));
 
         return $client;
     }

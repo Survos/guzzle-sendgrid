@@ -2,12 +2,12 @@
 
 namespace Guzzle\SendGrid\Command;
 
-use Guzzle\Service\Command\DynamicCommand;
+use Guzzle\Service\Command\OperationCommand;
 
 /**
  *
  */
-class SendGridCommand extends DynamicCommand
+class SendGridCommand extends OperationCommand
 {
     public static function dateFormat($date)
     {
