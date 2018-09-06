@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.2",
-        "guzzle/guzzle": "*"
+        "php": ">=7.1",
+        "guzzlehttp/guzzle": "*"
     },
     "autoload": {
         "psr-0": { "Guzzle\\SendGrid": "/src" }
